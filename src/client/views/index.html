@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Articles Evaluator</title>    
+    </head>
+
+    <body>
+
+        <main>
+           <div class="container"> 
+                <section>
+
+                    <p> <center> Articles Evaluator </center> </p>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <form class="" onsubmit="return Client.handleSubmit(event)">
+                        <p>Enter A URL of An Article to Discover Its Sentiment: </p>
+                        <input id="url" type="text" name="input" value="" onblur="onBlur()" placeholder="Enter URL">
+                        <input id="submitBtn" type="submit" name="" value="Submit Link" onclick="return Client.handleSubmit(event)" onsubmit="return handleSubmit(event)">
+                    </form>
+                <section>
+
+
+
+            <section>
+                <strong>Results:</strong>
+                <div id="results">
+                    <p id="logger">Waiting for input...</p>
+                </div>
+
+            </section>
+
+        </div>
+
+        </main>
+
+        <footer>
+            <p> Articles Evaluator Is Powered By MeaningCloud</p>
+        </footer>
+        
+        <script>
+            // Check that service workers are supported
+            if ('serviceWorker' in navigator) {
+                // Use the window load event to keep the page load performant
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js');
+                });
+            }
+        </script>
+    </body>
+</html>
