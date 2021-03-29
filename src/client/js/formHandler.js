@@ -1,39 +1,23 @@
-async function handleSubmit(event) {
-    alert ("in handle submit method ");
+async function handleSubmit(event) {    
     event.preventDefault()
-    // check what text was put into the form field
-    let url = document.getElementById('url').value;
-    alert (url);
-    let logger = document.getElementById("logger");
+    let url = document.getElementById('url').value
+    if (Client.checkForUrl(url)) {
+        try {
+            let log = document.getElementById("log");
+            log.innerHTML = "processing...";
+            const apicall = await fetch(`http://localhost:8081/apiurl/${url}`);
+            const response = await apicall.json();
+            log.innerHTML = "";
+            document.getElementById("agreement").innerHTML = response.agreement.toLowerCase();
+            document.getElementById("subjectivity").innerHTML = response.subjectivity.toLowerCase();
+            document.getElementById("confidence").innerHTML = response.confidence.toLowerCase();
+            document.getElementById("irony").innerHTML = response.irony.toLowerCase();
 
-    if (Client.checkForUrl(url)){
-        let submitBtn = document.getElementById("submitBtn");
-        try{
-            submitBtn.disabled = true;
-            logger.innerText = "Working...";
-            const apiCall = await fetch(`http://localhost:8081/scan/${url}`);
-            const apiResponse = await apiCall.json();
-            
-            document.getElementById("results").innerHTML = 
-            `<table>
-                <tr><td>Sentiment: </td><td>Result</td></tr>
-                <tr><td>Agreement: </td><td>${apiResponse.agreement.toLowerCase()}</td></tr>
-                <tr><td>Subjectivity: </td><td>${apiResponse.subjectivity.toLowerCase()}</td></tr>
-                <tr><td>Confidence: </td><td>${apiResponse.confidence}</td></tr>
-                <tr><td>Irony: </td><td>${apiResponse.irony.toLowerCase()}</td></tr>
-                </table>`;
-            
-            submitBtn.disabled = false;
-        }catch(err){
-            submitBtn.disabled = false;
-            alert(err.message);
-            console.log(err.message);
-            logger.innerText = "Error...";
+        }catch (err){
+            log.innerHTML = err.message; 
         }
     }else {
-        alert("Invalid URL, please make sure you entered a correct URL");
-        logger.innerText =
-        "Invalid URL, please try a correct URL like https://jamesclear.com/five-step-creative-process/";
+        log.innerHTML = "not a valid url"; 
     }
 }
 export { handleSubmit }

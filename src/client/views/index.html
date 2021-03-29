@@ -17,21 +17,32 @@
                     <br>
                     <br>
 
-                    <form class="" onsubmit="return Client.handleSubmit(event)">
-                        <p>Enter A URL of An Article to Discover Its Sentiment: </p>
-                        <input id="url" type="text" name="input" value="" onblur="onBlur()" placeholder="Enter URL">
-                        <input id="submitBtn" type="submit" name="" value="Submit Link" onclick="return Client.handleSubmit(event)" onsubmit="return handleSubmit(event)">
-                    </form>
+                    <section>
+                        <form class="" onsubmit="return Client.handleSubmit(event)">
+                            <p>Enter A URL of An Article to Discover Its Sentiment: </p>
+                            <input id="url" type="text" name="input" value="" onblur="onBlur()" placeholder="Name">
+                            <input id="submit" type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return handleSubmit(event)">
+                        </form>
+                    <section>
+
+
                 <section>
 
 
 
             <section>
                 <strong>Results:</strong>
+              
                 <div id="results">
-                    <p id="logger">Waiting for input...</p>
+                    <p id="log">wait for input >>></p>
                 </div>
 
+                <div id="agreement"></div>
+                <div id="subjectivity"></div>
+                <div id="confidence"></div>
+                <div id="irony"></div>
+                <div id="score_tag"></div>
+              
             </section>
 
         </div>

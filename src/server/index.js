@@ -1,72 +1,50 @@
-const dotenv = require('dotenv');
-dotenv.config();
+const dotenv = require("dotenv"); 
+dotenv.config(); 
+
 var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
 
-console.log(`Your API key is ${process.env.API_KEY}`);
 const app = express()
+
 app.use(express.static('dist'))
 
-console.log(JSON.stringify(mockAPIResponse))
+console.log(__dirname)
 
-// parser
-const bodyParser = require("body-parser");
-// Allow parsing of nested objects
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  })
-);
-app.use(bodyParser.json());
-
-console.log(__dirname);
-
-
-
-// cors
-const cors = require("cors");
-app.use(cors());
-const axios = require("axios");
-
+const axios = require ("axios"); 
 
 app.get('/', function (req, res) {
-    res.sendFile('dist/index.html')
-    //res.sendFile(path.resolve('src/client/views/index.html'))
+     res.sendFile('dist/index.html')
+})
+
+// designates what port the app will listen to for incoming requests
+app.listen(8081, function () {
+    console.log('Example app listening on port 8082!')
 })
 
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
-});
+})
 
+app.get("/apiurl/*", async (req, res) => {
+    try {
 
-app.get("/scan/*", async (req, res) => {
-    try{
         const url = req.params[0];
-        apiURL = "https://api.meaningcloud.com/sentiment-2.1";
-        apiKey = process.env.API_KEY;
-        const apiResponse = await axios.get(
-            `${apiURL}?key=${apiKey}&url=${url}&lang=en`
+        apiurl = "https://api.meaningcloud.com/sentiment-2.1";
+        apikey = process.env.API_KEY;
+        const response = await axios.get(
+          `${apiurl}?key=${apikey}&url=${url}&lang=en`
         );
-        const { agreement, subjectivity, confidence, irony } = apiResponse.data;
-        
+    
+        const { agreement, subjectivity, confidence, irony } = response.data;
         res.send({
           agreement,
           subjectivity,
           confidence,
           irony,
         });
-
+    
     }catch (err){
-        console.log(err);
-        res.status(500).send("an error happended while sending request to the backend..." + err);    
+        res.status(500).send ("error !!! " +err);
     }
 });
-
-app.listen(8081, function () {
-    console.log('Example app listening on port 8081!')
-});
-
-
-
-

@@ -1,7 +1,5 @@
 import { checkForUrl } from "../src/client/js/urlChecker";
 
-
-
 describe("Testing the regex URL validation functionality", () => {
   test("Making sure urlChecker is defined", () => {
     expect(checkForUrl).toBeDefined();
